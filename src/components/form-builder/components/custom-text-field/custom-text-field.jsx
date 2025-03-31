@@ -59,7 +59,6 @@ export default function CustomTextField({
               placeholder={placeholder}
               type={type || "text"}
               {...(multiline && { rows: 4, as: "textarea" })}
-              {...InputProps}
             />
         )}
       />

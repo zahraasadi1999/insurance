@@ -4,6 +4,7 @@ import { SearchOutlined } from "@ant-design/icons";
 import { useAppDispatch, useAppSelector } from "../../hooks/redux";
 import { fetch_submitted_form } from "../../apis/global-api";
 
+// Type definitions for insurance records and table data
 interface InsuranceRecord {
   id: string;
   "Full Name": string;
@@ -21,16 +22,22 @@ interface InsuranceData {
 const InsuranceTable: React.FC<{ insuranceData: InsuranceData }> = ({
   insuranceData,
 }) => {
+  // State for selected table rows, search text, and filtered data
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
   const [searchText, setSearchText] = useState("");
   const [filteredData, setFilteredData] = useState<InsuranceRecord[]>(
     insuranceData.data
   );
 
+  // Update filtered data when source data changes
   useEffect(() => {
     setFilteredData(insuranceData.data);
   }, [insuranceData.data]);
 
+  /**
+   * Handles global search across all columns
+   * @param {string} value - Search term
+   */
   const handleSearch = (value: string) => {
     setSearchText(value);
     if (value === "") {
@@ -47,6 +54,11 @@ const InsuranceTable: React.FC<{ insuranceData: InsuranceData }> = ({
     }
   };
 
+  /**
+   * Generates search/filter properties for table columns
+   * @param {keyof InsuranceRecord} dataIndex - The column to apply search to
+   * @returns {Object} Configuration for column search/filter
+   */
   const getColumnSearchProps = (dataIndex: keyof InsuranceRecord) => ({
     filterDropdown: ({
       setSelectedKeys,
@@ -89,19 +101,20 @@ const InsuranceTable: React.FC<{ insuranceData: InsuranceData }> = ({
       record[dataIndex].toString().toLowerCase().includes(value.toLowerCase()),
   });
 
+  // Column configuration for the Ant Design Table
   const columns: any = [
     {
       title: "Full Name",
       dataIndex: "Full Name",
       key: "Full Name",
       sorter: (a: any, b: any) => a["Full Name"].localeCompare(b["Full Name"]),
-      ...getColumnSearchProps("Full Name"),
+      ...getColumnSearchProps("Full Name"), // Add search functionality
     },
     {
       title: "Age",
       dataIndex: "Age",
       key: "Age",
-      sorter: (a: any, b: any) => a.Age - b.Age,
+      sorter: (a: any, b: any) => a.Age - b.Age, // Numeric sorting
     },
     {
       title: "Gender",
@@ -136,6 +149,7 @@ const InsuranceTable: React.FC<{ insuranceData: InsuranceData }> = ({
     },
   ];
 
+  // Row selection configuration
   const rowSelection = {
     selectedRowKeys,
     onChange: (keys: React.Key[]) => setSelectedRowKeys(keys),
@@ -173,19 +187,25 @@ const InsuranceTable: React.FC<{ insuranceData: InsuranceData }> = ({
   );
 };
 
+/**
+ * InsuranceSubmittedTable Component - Main container that fetches and displays insurance data
+ */
 const InsuranceSubmittedTable: React.FC = () => {
   const dispatch = useAppDispatch();
 
+  // Fetch insurance data on component mount
   useEffect(() => {
     fetch_submitted_form({ dispatch });
   }, [dispatch]);
 
+  // Get insurance data from Redux store
   const insuranceData = useAppSelector((state) => state.insurance.submitted);
 
   return (
     <div style={{ padding: "24px" }}>
       <h2>Insurance Applications</h2>
 
+      {/* Conditional rendering based on data availability */}
       {insuranceData && insuranceData.data ? (
         <InsuranceTable insuranceData={insuranceData} />
       ) : (

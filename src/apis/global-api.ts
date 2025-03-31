@@ -1,4 +1,3 @@
-import { AxiosInstance } from "axios";
 import api from "../configs/axios/axios";
 import {
   setInsuranceData,
