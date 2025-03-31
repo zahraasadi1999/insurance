@@ -49,3 +49,11 @@ function MyForm() {
   );
 }
 ```javascript
+
+2. Field Types
+Component	Description	Example Config
+CustomTextField	Text input with masking support	{ type: "text", masking: true }
+CustomSelect	Searchable dropdown	{ type: "select", options: [...] }
+CustomRadio	Radio button group	{ type: "radio", options: [...] }
+CustomCheckbox	Checkbox input	{ type: "checkbox" }
+CustomDatePicker	Date picker	{ type: "date", format: "YYYY-MM-DD" }
