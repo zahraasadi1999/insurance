@@ -1,3 +1,4 @@
+```javascript
 src/
 ├── form-builder/
 ├── components/           # Reusable form components
@@ -12,9 +13,9 @@ src/
 │   └── form.js   # Main component
 ├── hooks/                # Custom hooks
 └── redux/                # Redux integration
+```javascript
 
-
-
+```javascript
 import FormBuilder from '@your-repo/form-builder';
 import { useForm } from 'react-hook-form';
 
@@ -47,3 +48,4 @@ function MyForm() {
     />
   );
 }
+```javascript
