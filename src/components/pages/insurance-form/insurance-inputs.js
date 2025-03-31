@@ -12,6 +12,7 @@ import { useAppDispatch, useAppSelector } from "../../../hooks/redux";
 export default function InsuranceFormInput({ data, formmethods }) {
   const [formSections, setFormSections] = useState({});
   const form = formmethods.watch();
+
   const dispatch = useAppDispatch();
   const dynumic = useAppSelector((state) => state.dynamic);
   const watchAllFields = useWatch({
